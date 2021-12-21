@@ -2,7 +2,7 @@
 /**
  * Shortcode definition
  *
- * @package wp-mautic
+ * @package friendly-automate
  */
 
 // Prevent direct access to this file.
@@ -12,24 +12,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-add_shortcode( 'mautic', 'wpmautic_shortcode' );
+add_shortcode( 'friendlyautomate', 'friendlyautomate_shortcode' );
 
 // Backward compatibilities.
-add_shortcode( 'mauticcontent', 'wpmautic_dwc_shortcode' );
-add_shortcode( 'mauticvideo', 'wpmautic_video_shortcode' );
-add_shortcode( 'mauticform', 'wpmautic_form_shortcode' );
-add_shortcode( 'mautictags', 'wpmautic_tags_shortcode' );
-add_shortcode( 'mauticfocus', 'wpmautic_focus_shortcode' );
+add_shortcode( 'friendlycontent', 'friendlyautomate_dwc_shortcode' );
+add_shortcode( 'friendlyvideo', 'friendlyautomate_video_shortcode' );
+add_shortcode( 'friendlyform', 'friendlyautomate_form_shortcode' );
+add_shortcode( 'friendlytags', 'friendlyautomate_tags_shortcode' );
+add_shortcode( 'friendlyfocus', 'friendlyautomate_focus_shortcode' );
 
 /**
- * Handle mautic shortcode. Must include a type attribute.
+ * Handle friendly shortcode. Must include a type attribute.
  *
  * @param array       $atts    Shortcode attributes.
  * @param string|null $content Default content to be displayed.
  *
  * @return string
  */
-function wpmautic_shortcode( $atts, $content = null ) {
+function friendlyautomate_shortcode( $atts, $content = null ) {
 	$default = shortcode_atts(
 		array(
 			'type' => null,
@@ -39,30 +39,30 @@ function wpmautic_shortcode( $atts, $content = null ) {
 
 	switch ( $default['type'] ) {
 		case 'form':
-			return wpmautic_form_shortcode( $atts );
+			return friendlyautomate_form_shortcode( $atts );
 		case 'content':
-			return wpmautic_dwc_shortcode( $atts, $content );
+			return friendlyautomate_dwc_shortcode( $atts, $content );
 		case 'video':
-			return wpmautic_video_shortcode( $atts );
+			return friendlyautomate_video_shortcode( $atts );
 		case 'tags':
-			return wpmautic_tags_shortcode( $atts );
+			return friendlyautomate_tags_shortcode( $atts );
 		case 'focus':
-			return wpmautic_focus_shortcode( $atts );
+			return friendlyautomate_focus_shortcode( $atts );
 	}
 
 	return false;
 }
 
 /**
- * Handle mauticform shortcode
- * example: [mautic type="form" id="1"]
+ * Handle friendlyform shortcode
+ * example: [friendlyautomate type="form" id="1"]
  *
  * @param  array $atts Shortcode attributes.
  *
  * @return string
  */
-function wpmautic_form_shortcode( $atts ) {
-	$base_url = wpmautic_option( 'base_url', '' );
+function friendlyautomate_form_shortcode( $atts ) {
+	$base_url = friendlyautomate_option( 'base_url', '' );
 	if ( '' === $base_url ) {
 		return false;
 	}
@@ -87,14 +87,14 @@ function wpmautic_form_shortcode( $atts ) {
 
 /**
  * Dynamic content shortcode handling
- * example: [mautic type="content" slot="slot_name"]Default Content[/mautic]
+ * example: [friendly type="content" slot="slot_name"]Default Content[/friendly]
  *
  * @param  array       $atts    Shortcode attributes.
  * @param  string|null $content Default content to be displayed.
  *
  * @return string
  */
-function wpmautic_dwc_shortcode( $atts, $content = null ) {
+function friendlyautomate_dwc_shortcode( $atts, $content = null ) {
 	$atts = shortcode_atts(
 		array(
 			'slot' => '',
@@ -112,20 +112,20 @@ function wpmautic_dwc_shortcode( $atts, $content = null ) {
 
 /**
  * Video shortcode handling
- * example: [mautic type="video" gate-time="15" form-id="1" src="https://www.youtube.com/watch?v=QT6169rdMdk"]
+ * example: [friendly type="video" gate-time="15" form-id="1" src="https://www.youtube.com/watch?v=QT6169rdMdk"]
  *
  * @param  array $atts Shortcode attributes.
  *
  * @return string
  */
-function wpmautic_video_shortcode( $atts ) {
+function friendlyautomate_video_shortcode( $atts ) {
 	$atts = shortcode_atts(
 		array(
 			'gate-time'    => 15,
 			'form-id'      => '',
 			'src'          => '',
 			'video-type'   => '',
-			'mautic-video' => 'true',
+			'friendly-video' => 'true',
 			'width'        => 640,
 			'height'       => 360,
 		),
@@ -133,11 +133,11 @@ function wpmautic_video_shortcode( $atts ) {
 	);
 
 	if ( empty( $atts['src'] ) ) {
-		return __( 'You must provide a video source. Add a src="URL" attribute to your shortcode. Replace URL with the source url for your video.', 'wp-mautic' );
+		return __( 'You must provide a video source. Add a src="URL" attribute to your shortcode. Replace URL with the source url for your video.', 'wp-friendly' );
 	}
 
-	if ( empty( $atts['form-id'] ) && 'true' !== $atts['mautic-video'] ) {
-		return __( 'You must provide a mautic form id. Add a form-id="#" attribute to your shortcode. Replace # with the id of the form you want to use.', 'wp-mautic' );
+	if ( empty( $atts['form-id'] ) && 'true' !== $atts['friendly-video'] ) {
+		return __( 'You must provide a Friendly Automate form id. Add a form-id="#" attribute to your shortcode. Replace # with the id of the form you want to use.', 'wp-friendly' );
 	}
 
 	if ( preg_match( '/^.*((youtu.be)|(youtube.com))\/((v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))?\??v?=?([^#\&\?]*).*/', $atts['src'] ) ) {
@@ -151,33 +151,33 @@ function wpmautic_video_shortcode( $atts ) {
 	}
 
 	if ( empty( $atts['video-type'] ) ) {
-		return __( 'Please define a valid video type with video-type="#".', 'wp-mautic' );
+		return __( 'Please define a valid video type with video-type="#".', 'wp-friendly' );
 	}
 
 	return sprintf(
-		'<video height="%1$s" width="%2$s"' . ( empty( $atts['form-id'] ) ? '' : ' data-form-id="%3$s"' ) . ' data-gate-time="%4$s" data-mautic-video="%5$s">' .
+		'<video height="%1$s" width="%2$s"' . ( empty( $atts['form-id'] ) ? '' : ' data-form-id="%3$s"' ) . ' data-gate-time="%4$s" data-friendly-video="%5$s">' .
 			'<source type="video/%6$s" src="%7$s" />' .
 		'</video>',
 		esc_attr( $atts['height'] ),
 		esc_attr( $atts['width'] ),
 		esc_attr( $atts['form-id'] ),
 		esc_attr( $atts['gate-time'] ),
-		esc_attr( $atts['mautic-video'] ),
+		esc_attr( $atts['friendly-video'] ),
 		esc_attr( $atts['video-type'] ),
 		esc_attr( $atts['src'] )
 	);
 }
 
 /**
- * Handle mautic tags by WordPress shortcodes
- * example: [mautic type="tags" values="addtag,-removetag"]
+ * Handle friendly tags by WordPress shortcodes
+ * example: [friendly type="tags" values="addtag,-removetag"]
  *
  * @param  array $atts Shortcode attributes.
  *
  * @return string
  */
-function wpmautic_tags_shortcode( $atts ) {
-	$base_url = wpmautic_option( 'base_url', '' );
+function friendlyautomate_tags_shortcode( $atts ) {
+	$base_url = friendlyautomate_option( 'base_url', '' );
 	if ( '' === $base_url ) {
 		return false;
 	}
@@ -197,20 +197,20 @@ function wpmautic_tags_shortcode( $atts ) {
 		'<img src="%s/mtracking.gif?tags=%s" alt="%s" style="display:none;" />',
 		esc_url( $base_url ),
 		esc_attr( $atts['values'] ),
-		esc_attr__( 'Mautic Tags', 'wp-mautic' )
+		esc_attr__( 'friendly Tags', 'wp-friendly' )
 	);
 }
 
 /**
- * Handle mautic focus itens on WordPress Page
- * example: [mautic type="focus" id="1"]
+ * Handle friendly focus itens on WordPress Page
+ * example: [friendly type="focus" id="1"]
  *
  * @param  array $atts Shortcode attributes.
  *
  * @return string
  */
-function wpmautic_focus_shortcode( $atts ) {
-	$base_url = wpmautic_option( 'base_url', '' );
+function friendlyautomate_focus_shortcode( $atts ) {
+	$base_url = friendlyautomate_option( 'base_url', '' );
 	if ( '' === $base_url ) {
 		return false;
 	}

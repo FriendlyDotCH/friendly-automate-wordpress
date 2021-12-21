@@ -2,7 +2,7 @@
 /**
  * Option page definition
  *
- * @package wp-mautic
+ * @package friendly-automate
  */
 
 // Prevent direct access to this file.
@@ -13,36 +13,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * HTML for the Mautic option page
+ * HTML for the Friendly option page
  */
-function wpmautic_options_page() {
+function friendlyautomate_options_page() {
 	?>
 	<div>
-		<h2><?php esc_html_e( 'Friendly Automate', 'wp-mautic' ); ?></h2>
-		<p><?php esc_html_e( 'Add Friendly Automate tracking capabilities to your website.', 'wp-mautic' ); ?></p>
+		<h2><?php esc_html_e( 'Friendly Automate', 'friendly-automate' ); ?></h2>
+		<p><?php esc_html_e( 'Add Friendly Automate tracking capabilities to your website.', 'friendly-automate' ); ?></p>
 		<form action="options.php" method="post">
-			<?php settings_fields( 'wpmautic' ); ?>
-			<?php do_settings_sections( 'wpmautic' ); ?>
+			<?php settings_fields( 'friendlyautomate' ); ?>
+			<?php do_settings_sections( 'friendlyautomate' ); ?>
 			<?php submit_button(); ?>
 		</form>
-		<h3><?php esc_html_e( 'Shortcode Examples:', 'wp-mautic' ); ?></h3>
+		<h3><?php esc_html_e( 'Shortcode Examples:', 'friendly-automate' ); ?></h3>
 		<ul>
-			<li><?php esc_html_e( 'Friendly Form Embed:', 'wp-mautic' ); ?> <code>[mautic type="form" id="1"]</code></li>
-			<li><?php esc_html_e( 'Friendly Dynamic Content:', 'wp-mautic' ); ?> <code>[mautic type="content" slot="slot_name"]<?php esc_html_e( 'Default Text', 'wp-mautic' ); ?>[/mautic]</code></li>
+			<li><?php esc_html_e( 'Friendly Form Embed:', 'friendly-automate' ); ?> <code>[friendlyautomate type="form" id="1"]</code></li>
+			<li><?php esc_html_e( 'Friendly Dynamic Content:', 'friendly-automate' ); ?> <code>[friendlyautomate type="content" slot="slot_name"]<?php esc_html_e( 'Default Text', 'friendly-automate' ); ?>[/friendlyautomate]</code></li>
 		</ul>
-		<h3><?php esc_html_e( 'Quick Links', 'wp-mautic' ); ?></h3>
+		<h3><?php esc_html_e( 'Quick Links', 'friendly-automate' ); ?></h3>
 		<ul>
 			<li>
-				<a href="https://github.com/mautic/mautic-wordpress#mautic-wordpress-plugin" target="_blank"><?php esc_html_e( 'Plugin docs', 'wp-mautic' ); ?></a>
+				<a href="https://friendly.ch/contact" target="_blank"><?php esc_html_e( 'Plugin support', 'friendly-automate' ); ?></a>
 			</li>
 			<li>
-				<a href="https://friendly.ch/contact" target="_blank"><?php esc_html_e( 'Plugin support', 'wp-mautic' ); ?></a>
+				<a href="https://calendly.com/friendly-ch/automate-training" target="_blank"><?php esc_html_e( 'Book a free, individual training session', 'friendly-automate' ); ?></a>
 			</li>
 			<li>
-				<a href="https://calendly.com/friendly-ch/automate-training" target="_blank"><?php esc_html_e( 'Book a free, individual training session', 'wp-mautic' ); ?></a>
+				<a href="https://mautic.org" target="_blank"><?php esc_html_e( 'We\'re based on Mautic', 'friendly-automate' ); ?></a>
 			</li>
 			<li>
-				<a href="https://mautic.org" target="_blank"><?php esc_html_e( 'We\'re based on Mautic', 'wp-mautic' ); ?></a>
+				<a href="https://github.com/mautic/mautic-wordpress#mautic-wordpress-plugin" target="_blank"><?php esc_html_e( 'Plugin docs', 'friendly-automate' ); ?></a>
 			</li>
 		</ul>
 	</div>
@@ -52,63 +52,72 @@ function wpmautic_options_page() {
 /**
  * Define admin_init hook logic
  */
-function wpmautic_admin_init() {
-	register_setting( 'wpmautic', 'wpmautic_options', 'wpmautic_options_validate' );
+function friendlyautomate_admin_init() {
+	register_setting( 'friendlyautomate', 'friendlyautomate_options', 'friendlyautomate_options_validate' );
 
 	add_settings_section(
-		'wpmautic_main',
-		__( 'Main Settings', 'wp-mautic' ),
-		'wpmautic_section_text',
-		'wpmautic'
+		'friendlyautomate_main',
+		__( 'Main Settings', 'friendly-automate' ),
+		'friendlyautomate_section_text',
+		'friendlyautomate'
 	);
 
 	add_settings_field(
-		'wpmautic_base_url',
-		__( 'Friendly URL', 'wp-mautic' ),
-		'wpmautic_base_url',
-		'wpmautic',
-		'wpmautic_main'
+		'friendlyautomate_base_url',
+		__( 'Friendly Automate URL', 'friendly-automate' ),
+		'friendlyautomate_base_url',
+		'friendlyautomate',
+		'friendlyautomate_main'
 	);
 	add_settings_field(
-		'wpmautic_script_location',
-		__( 'Tracking script location', 'wp-mautic' ),
-		'wpmautic_script_location',
-		'wpmautic',
-		'wpmautic_main'
+		'friendlyautomate_script_location',
+		__( 'Tracking script location', 'friendly-automate' ),
+		'friendlyautomate_script_location',
+		'friendlyautomate',
+		'friendlyautomate_main'
 	);
 	add_settings_field(
-		'wpmautic_fallback_activated',
-		__( 'Tracking image', 'wp-mautic' ),
-		'wpmautic_fallback_activated',
-		'wpmautic',
-		'wpmautic_main'
+		'friendlyautomate_fallback_activated',
+		__( 'Tracking image', 'friendly-automate' ),
+		'friendlyautomate_fallback_activated',
+		'friendlyautomate',
+		'friendlyautomate_main'
 	);
+
 	add_settings_field(
-		'wpmautic_track_logged_user',
-		__( 'Logged user', 'wp-mautic' ),
-		'wpmautic_track_logged_user',
-		'wpmautic',
-		'wpmautic_main'
+		'friendlyautomate_track_tags_categories',
+		__( 'Tags and Category tracking', 'friendly-automate' ),
+		'friendlyautomate_track_tags_categories',
+		'friendlyautomate',
+		'friendlyautomate_main'
+	);
+
+	add_settings_field(
+		'friendlyautomate_track_logged_user',
+		__( 'Logged user', 'friendly-automate' ),
+		'friendlyautomate_track_logged_user',
+		'friendlyautomate',
+		'friendlyautomate_main'
 	);
 }
-add_action( 'admin_init', 'wpmautic_admin_init' );
+add_action( 'admin_init', 'friendlyautomate_admin_init' );
 
 /**
  * Section text
  */
-function wpmautic_section_text() {
+function friendlyautomate_section_text() {
 }
 
 /**
- * Define the input field for Mautic base URL
+ * Define the input field for Friendly base URL
  */
-function wpmautic_base_url() {
-	$url = wpmautic_option( 'base_url', '' );
+function friendlyautomate_base_url() {
+	$url = friendlyautomate_option( 'base_url', '' );
 
 	?>
 	<input
-		id="wpmautic_base_url"
-		name="wpmautic_options[base_url]"
+		id="friendlyautomate_base_url"
+		name="friendlyautomate_options[base_url]"
 		size="40"
 		type="text"
 		placeholder="https://..."
@@ -118,66 +127,66 @@ function wpmautic_base_url() {
 }
 
 /**
- * Define the input field for Mautic script location
+ * Define the input field for Friendly script location
  */
-function wpmautic_script_location() {
-	$position     = wpmautic_option( 'script_location', '' );
+function friendlyautomate_script_location() {
+	$position     = friendlyautomate_option( 'script_location', '' );
 	$allowed_tags = array(
 		'br'   => array(),
 		'code' => array(),
 	);
 
 	?>
-	<fieldset id="wpmautic_script_location">
+	<fieldset id="friendlyautomate_script_location">
 		<label>
 			<input
 				type="radio"
-				name="wpmautic_options[script_location]"
+				name="friendlyautomate_options[script_location]"
 				value="header"
 				<?php
 				if ( 'footer' !== $position && 'disabled' !== $position ) :
 					?>
 					checked<?php endif; ?>
 			/>
-			<?php echo wp_kses( __( 'Added in the <code>wp_head</code> action.<br/>Inserts the tracking code before the <code>&lt;head&gt;</code> tag; can be slightly slower since page load is delayed until all scripts in <code><head></code> are loaded and processed.', 'wp-mautic' ), $allowed_tags ); ?>
+			<?php echo wp_kses( __( 'Added in the <code>wp_head</code> action.<br/>Inserts the tracking code before the <code>&lt;head&gt;</code> tag; can be slightly slower since page load is delayed until all scripts in <code><head></code> are loaded and processed.', 'friendly-automate' ), $allowed_tags ); ?>
 		</label>
 		<br/>
 		<label>
 			<input
 				type="radio"
-				name="wpmautic_options[script_location]"
+				name="friendlyautomate_options[script_location]"
 				value="footer"
 				<?php
 				if ( 'footer' === $position ) :
 					?>
 					checked<?php endif; ?>
 			/>
-			<?php echo wp_kses( __( 'Embedded within the <code>wp_footer</code> action.<br/>Inserts the tracking code before the <code>&lt;/body&gt;</code> tag; slightly better for performance but may track less reliably if users close the page before the script has loaded.', 'wp-mautic' ), $allowed_tags ); ?>
+			<?php echo wp_kses( __( 'Embedded within the <code>wp_footer</code> action.<br/>Inserts the tracking code before the <code>&lt;/body&gt;</code> tag; slightly better for performance but may track less reliably if users close the page before the script has loaded.', 'friendly-automate' ), $allowed_tags ); ?>
 		</label>
 		<br />
 		<label>
 			<input
 				type="radio"
-				name="wpmautic_options[script_location]"
+				name="friendlyautomate_options[script_location]"
 				value="disabled"
 				<?php
 				if ( 'disabled' === $position ) :
 					?>
 					checked<?php endif; ?>
 			/>
-			<?php echo wp_kses( __( 'Visitor will not be tracked when rendering the page. Use this option to comply with GDPR regulations. If the visitor accept cookies you must execute the <code>wpmautic_send()</code> JavaScript function to start tracking.', 'wp-mautic' ), $allowed_tags ); ?>
+			<?php echo wp_kses( __( 'Visitor will not be tracked when rendering the page. Use this option to comply with GDPR regulations. If the visitor accept cookies you must execute the <code>friendlyautomate_send()</code> JavaScript function to start tracking.', 'friendly-automate' ), $allowed_tags ); ?>
 			<br/>
-			<?php echo wp_kses( __( 'However when using shortcodes, a tracking cookie will be added everytime even when tracking is disabled. This is because loading a Mautic resource (javascript or image) generate that cookie.', 'wp-mautic' ), $allowed_tags ); ?>
+			<?php echo wp_kses( __( 'However when using shortcodes, a tracking cookie will be added everytime even when tracking is disabled. This is because loading a Friendly Automate resource (javascript or image) generates that cookie.', 'friendly-automate' ), $allowed_tags ); ?>
 		</label>
 	</fieldset>
 	<?php
 }
 
 /**
- * Define the input field for Mautic fallback flag
+ * Define the input field for Friendly fallback flag
  */
-function wpmautic_fallback_activated() {
-	$flag         = wpmautic_option( 'fallback_activated', false );
+function friendlyautomate_fallback_activated() {
+	$flag         = friendlyautomate_option( 'fallback_activated', false );
 	$allowed_tags = array(
 		'br'   => array(),
 		'code' => array(),
@@ -185,8 +194,8 @@ function wpmautic_fallback_activated() {
 
 	?>
 	<input
-		id="wpmautic_fallback_activated"
-		name="wpmautic_options[fallback_activated]"
+		id="friendlyautomate_fallback_activated"
+		name="friendlyautomate_options[fallback_activated]"
 		type="checkbox"
 		value="1"
 		<?php
@@ -194,24 +203,23 @@ function wpmautic_fallback_activated() {
 			?>
 			checked<?php endif; ?>
 	/>
-	<label for="wpmautic_fallback_activated">
-		<?php esc_html_e( 'Activate the tracking image when JavaScript is disabled.', 'wp-mautic' ); ?>
+	<label for="friendlyautomate_fallback_activated">
+		<?php esc_html_e( 'Activate the tracking image when JavaScript is disabled.', 'friendly-automate' ); ?>
 		<br/>
-		<?php echo wp_kses( __( 'Be warned, that the tracking image will always generate a cookie on the user browser side. If you want to control cookies and comply to GDPR, you must use JavaScript instead.', 'wp-mautic' ), $allowed_tags ); ?>
+		<?php echo wp_kses( __( 'Be warned, that the tracking image will always generate a cookie on the user browser side. If you want to control cookies and comply to GDPR, you must use JavaScript instead.', 'friendly-automate' ), $allowed_tags ); ?>
 	</label>
 	<?php
 }
 
 /**
- * Define the input field for Mautic logged user tracking flag
+ * Define the input field for Friendly category & tag tracking
  */
-function wpmautic_track_logged_user() {
-	$flag = wpmautic_option( 'track_logged_user', false );
-
+function friendlyautomate_track_tags_categories() {
+	$flag         = friendlyautomate_option( 'tag_category_tracking', false );
 	?>
 	<input
-		id="wpmautic_track_logged_user"
-		name="wpmautic_options[track_logged_user]"
+		id="friendlyautomate_tag_category_tracking"
+		name="friendlyautomate_options[tag_category_tracking]"
 		type="checkbox"
 		value="1"
 		<?php
@@ -219,8 +227,33 @@ function wpmautic_track_logged_user() {
 			?>
 			checked<?php endif; ?>
 	/>
-	<label for="wpmautic_track_logged_user">
-		<?php esc_html_e( 'Track user information for logged-in users', 'wp-mautic' ); ?>
+	<label for="friendlyautomate_tag_category_tracking">
+		<?php esc_html_e( 'Track the tags and categories that your visitors are interested in.', 'friendly-automate' ); ?>
+		<br/>
+		<?php esc_html_e( 'This will show add WordPress categories and Tags to your website visitors as a Friendly Automate Tag. For example, if one of your posts has the category "Hosting", Friendly Automate will add this tag to the visitors who land on your post.', 'friendly-automate' ); ?>
+	</label>
+	<?php
+}
+
+/**
+ * Define the input field for Friendly logged user tracking flag
+ */
+function friendlyautomate_track_logged_user() {
+	$flag = friendlyautomate_option( 'track_logged_user', false );
+
+	?>
+	<input
+		id="friendlyautomate_track_logged_user"
+		name="friendlyautomate_options[track_logged_user]"
+		type="checkbox"
+		value="1"
+		<?php
+		if ( true === $flag ) :
+			?>
+			checked<?php endif; ?>
+	/>
+	<label for="friendlyautomate_track_logged_user">
+		<?php esc_html_e( 'Track user information for logged-in users', 'friendly-automate' ); ?>
 	</label>
 	<?php
 }
@@ -231,8 +264,8 @@ function wpmautic_track_logged_user() {
  * @param  array $input Input data.
  * @return array
  */
-function wpmautic_options_validate( $input ) {
-	$options = get_option( 'wpmautic_options' );
+function friendlyautomate_options_validate( $input ) {
+	$options = get_option( 'friendlyautomate_options' );
 
 	$input['base_url'] = isset( $input['base_url'] )
 		? trim( $input['base_url'], " \t\n\r\0\x0B/" )
@@ -247,6 +280,9 @@ function wpmautic_options_validate( $input ) {
 	}
 
 	$options['fallback_activated'] = isset( $input['fallback_activated'] ) && '1' === $input['fallback_activated']
+		? true
+		: false;
+	$options['tag_category_tracking'] = isset( $input['tag_category_tracking'] ) && '1' === $input['tag_category_tracking']
 		? true
 		: false;
 	$options['track_logged_user']  = isset( $input['track_logged_user'] ) && '1' === $input['track_logged_user']
